@@ -4,5 +4,5 @@ applications:
   instances: 1
   domain: mybluemix.net
   name: watson-recipe-bot-cloudant
-  host: watson-recipe-bot-cloudant
+  host: watson-recipe-bot-cloudant-${random-word}
   disk_quota: 1024M
