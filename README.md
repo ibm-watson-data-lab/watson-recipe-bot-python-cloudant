@@ -98,22 +98,29 @@ You can also change the Slack team from the pulldown in the top right.
 3. On the following screen you will find the API Token. Copy this value to your clipboard.
 4. Open the .env file in a text editor.
 5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
+
     ```
     SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
     ```
+
 6. Save the .env file
 
 Next, we need to get the Slack ID of the bot. The application includes a Python script for doing just that.
 
 1. From the command-line run the following command:
+
     ```
     python scripts/get_bot_id.py
     ```
+
 2. The script should print out the bot ID. The output should be similar to the following:
+
     ```
     Bot ID for 'sous-chef' is U3XXXXXXX
     ```
+
 3. Copy and paste the bot ID into your .env file:
+
     ```
     SLACK_BOT_ID=U3XXXXXXX
     ```
@@ -129,6 +136,7 @@ The application uses Spoonacular to find recipes based on ingredient or cuisines
 4. Choose the appropriate Pricing plan (i.e. **Basic**) and click the **Subscribe** button.
 5. Follow the instructions to sign into or sign up for a Mashape account.
 6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It may look something like this:
+
     ```
     curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/classify' \
       -H 'X-Mashape-Key: Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
@@ -136,7 +144,9 @@ The application uses Spoonacular to find recipes based on ingredient or cuisines
       -H 'Accept: application/json' \
       --data-binary '{"title":"Kroger Vitamin A & D Reduced Fat 2% Milk","upc":"","plu_code":""}'
     ```
+
 7. Copy the value of the X-Mashape-Key and paste it into your .env file:
+
     ```
     SPOONACULAR_KEY=Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
@@ -158,6 +168,7 @@ First, we'll walk you through provisioning a Watson Conversation service in your
 5. On your newly created Conversation service page click the **Service Credentials** tab.
 6. Find your newly created Credentials and click **View Credentials**
 7. Copy the username and password into your .env file:
+
     ```
     CONVERSATION_USERNAME=xxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxxx
     CONVERSATION_PASSWORD=xxxxxxxxxxxx
@@ -174,6 +185,7 @@ Next, let's launch the Watson Conversation tool and import our conversation work
 7. Under Workspaces you should now see the Recipe Bot.
 8. Click the menu button (3 vertical dots) and click **View Details**
 9. Copy the Workspace ID and paste it into your .env file:
+
     ```
     CONVERSATION_WORKSPACE_ID=40xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
     ```
@@ -189,6 +201,7 @@ We're almost there! Next, we'll provision an instance of Cloudant in our Bluemix
 5. On your newly created Cloudant service page click the **Service Credentials** tab.
 6. Find your newly created Credentials and click **View Credentials**
 7. Copy the username, password, and the url into your .env file:
+
     ```
     CLOUDANT_USERNAME=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix
     CLOUDANT_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
