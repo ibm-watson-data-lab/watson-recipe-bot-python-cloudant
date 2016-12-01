@@ -293,8 +293,8 @@ To verify that your bot is running open Slack and start a direct conversation wi
 
 Here are some sample conversations you can have with the bot:
 
-![sous-chef](screenshots/sous-chef-convo1.png?rev=3&raw=true)
+![sous-chef](screenshots/sous-chef-convo1.png?rev=4&raw=true)
 
-![sous-chef](screenshots/sous-chef-convo2.png?rev=3&raw=true)
+![sous-chef](screenshots/sous-chef-convo2.png?rev=4&raw=true)
 
-![sous-chef](screenshots/sous-chef-convo3.png?rev=3&raw=true)
+![sous-chef](screenshots/sous-chef-convo3.png?rev=4&raw=true)
