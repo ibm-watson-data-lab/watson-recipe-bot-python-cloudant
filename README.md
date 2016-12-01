@@ -1,7 +1,5 @@
 # Watson Recipe Bot + Cloudant
 
-*NOTE: This README is a work in progress* 
-
 This project is based on the [Watson Recipe Bot example](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu).
 The Watson Recipe Bot is Slack bot that recommends recipes based on ingredients or cuisines.
 This project is essentially a fork of the Watson Recipe Bot with some additional features, including:
@@ -34,11 +32,11 @@ CLOUDANT_URL=https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix.cloudant.com
 CLOUDANT_DB_NAME=watson_recipe_bot
 ```
 
-We will show you how configure the necessary services and retrieve these values in the instructions below:
+We will show you how to configure the necessary services and retrieve these values in the instructions below:
 
 ### Prerequisites
 
-The following prerequisites are required to run the application. We will walk you through configuring each one below:
+The following prerequisites are required to run the application.
 
 1. A [Bluemix](https://www.ibm.com/cloud-computing/bluemix/) account.
 2. A [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html) service provisioned in your Bluemix account.
@@ -94,18 +92,24 @@ In your web browser go to [https://my.slack.com/services/new/bot](https://my.sla
 You can also change the Slack team from the pulldown in the top right.
 
 1. You'll start by choosing a username for your bot. In the field provided enter **sous-chef**.
+
+    ![Slack](screenshots/slack1.png?rev=2&raw=true)
+
 2. Click the **Add bot integration** button.
 3. On the following screen you will find the API Token. Copy this value to your clipboard.
+
+    ![Slack](screenshots/slack2.png?rev=2&raw=true)
+    
 4. Open the .env file in a text editor.
 5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
 
     ```
-    SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
+    SLACK_BOT_TOKEN=xoxb-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
 6. Save the .env file
 
-Next, we need to get the Slack ID of the bot. The application includes a Python script for doing just that.
+Next, we need to get the Slack ID of the bot.
 
 1. From the command-line run the following command:
 
@@ -131,24 +135,24 @@ In this next step we'll set up your Spoonacular account. Spoonacular is a Food a
 The application uses Spoonacular to find recipes based on ingredient or cuisines requested by the user.
   
 1. In your web browser go to [https://spoonacular.com/food-api](https://spoonacular.com/food-api).
-2. Find and click the **Get Access** button.
+2. Click the **Get Access** button.
+
+    ![Spoonacular](screenshots/spoonacular1.png?rev=1&raw=true)
+
 3. Click the appropriate button to gain access (i.e. **Get Regular Access**)
+
+    ![Spoonacular](screenshots/spoonacular2.png?rev=2&raw=true)
+
 4. Choose the appropriate Pricing plan (i.e. **Basic**) and click the **Subscribe** button.
 5. Follow the instructions to sign into or sign up for a Mashape account.
-6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It may look something like this:
+6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It should look similar to this:
 
-    ```
-    curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/classify' \
-      -H 'X-Mashape-Key: Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
-      -H 'Content-Type: application/json' \
-      -H 'Accept: application/json' \
-      --data-binary '{"title":"Kroger Vitamin A & D Reduced Fat 2% Milk","upc":"","plu_code":""}'
-    ```
+    ![Spoonacular](screenshots/spoonacular3.png?rev=2&raw=true)
 
 7. Copy the value of the X-Mashape-Key and paste it into your .env file:
 
     ```
-    SPOONACULAR_KEY=Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    SPOONACULAR_KEY=vxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     ```
 
 ### Bluemix
@@ -157,16 +161,28 @@ If you do not already have a Bluemix account [click here](https://console.ng.blu
 
 Login to your Bluemix account.
 
-#### Watson Conversation
+### Watson Conversation
 
 First, we'll walk you through provisioning a Watson Conversation service in your Bluemix account:
 
 1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
+
+    ![Bluemix](screenshots/bluemix1.png?rev=3&raw=true)
+
 2. In the IBM Bluemix Catalog search for **Watson Conversation**.
 3. Select the **Conversation** service.
+
+    ![Watson Conversation](screenshots/conversation1.png?rev=1&raw=true)
+    
 4. Click the **Create** button on the Conversation detail page.
 5. On your newly created Conversation service page click the **Service Credentials** tab.
+
+    ![Watson Conversation](screenshots/conversation2.png?rev=1&raw=true)
+
 6. Find your newly created Credentials and click **View Credentials**
+
+    ![Watson Conversation](screenshots/conversation3.png?rev=1&raw=true)
+
 7. Copy the username and password into your .env file:
 
     ```
@@ -178,12 +194,24 @@ Next, let's launch the Watson Conversation tool and import our conversation work
 
 1. Go back to the **Manage** tab.
 2. Click the **Launch tool** button.
+
+    ![Watson Conversation](screenshots/conversation4.png?rev=1&raw=true)
+
 3. Log in to Watson Conversation with your Bluemix credentials if prompted to do so.
 4. On the **Create workspace** page click the **Import** button.
-5. Choose the workspace.json file in the application directory (watson-recipe-bot-python-cloudant).
+
+    ![Watson Conversation](screenshots/conversation5.png?rev=1&raw=true)
+    
+5. Choose the workspace.json file in the application directory (*watson-recipe-bot-python-cloudant/workspace.json*).
 6. Click the **Import** button.
+
+    ![Watson Conversation](screenshots/conversation6.png?rev=1&raw=true)
+
 7. Under Workspaces you should now see the Recipe Bot.
 8. Click the menu button (3 vertical dots) and click **View Details**
+
+    ![Watson Conversation](screenshots/conversation7.png?rev=1&raw=true)
+    
 9. Copy the Workspace ID and paste it into your .env file:
 
     ```
@@ -197,6 +225,9 @@ We're almost there! Next, we'll provision an instance of Cloudant in our Bluemix
 1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
 2. In the IBM Bluemix Catalog search for **Cloudant**.
 3. Select the **Cloudant NoSQL DB** service.
+
+    ![Watson Conversation](screenshots/cloudant1.png?rev=1&raw=true)
+    
 4. Click the **Create** button on the Cloudant detail page.
 5. On your newly created Cloudant service page click the **Service Credentials** tab.
 6. Find your newly created Credentials and click **View Credentials**
@@ -227,8 +258,53 @@ sous-chef is connected and running!
 To interact with the bot open Slack, go to the Slack team where you installed the bot, start a direct conversation with
 sous-chef, and say "hi".
 
-_More details coming soon!_
- 
+![sous-chef](screenshots/local1.png?rev=2&raw=true)
+
 ### Deploy to Bluemix
 
-**Coming soon!**
+You can deploy the application to Bluemix by following a few simple steps.
+
+We will be using the `cf push` command to deploy the application to Bluemix from our local environment. 
+If you have not yet installed the Bluemix CLI and Dev Tools [click here](https://console.ng.bluemix.net/docs/starters/install_cli.html)
+for instructions on how to download and configure the CLI tools.  
+
+Once you have the CLI tools run the following command (make sure you are in the watson-recipe-bot-python-cloudant directory):
+
+```
+cf push
+```
+
+It will take a few minutes for the application to be uploaded and created in Bluemix.
+The first time you deploy the application it will fail to start.
+This is because we need to add our environment variables to the application in Bluemix.
+
+1. After a few minutes has passed and your `cf push` command has completed log in to Bluemix.
+2. Find and click the **watson-recipe-bot-cloudant** application under **Cloud Foundry Applications** in your Apps Dashboard.
+3. On the application page click **Runtime** in the menu on the left then click **Environment Variables**:
+
+    ![Cloud Foundry Application](screenshots/cfapp1.png?rev=1&raw=true)
+
+4. Add each environment variable from your .env file and click the **Save** button:
+
+    ![Cloud Foundry Application](screenshots/cfapp2.png?rev=1&raw=true)
+    
+5. Your app will automatically restart, but it may fail again. Wait for a minute or two and restart your app again.
+
+To verify that your bot is running open Slack and start a direct conversation with sous-chef. Slack should show that sous-chef is active:
+
+![sous-chef](screenshots/sous-chef1.png?rev=1&raw=true)
+
+Here are some sample conversations you can have with sous-chef:
+
+![sous-chef](screenshots/sous-chef-convo1.png?rev=4&raw=true)
+
+![sous-chef](screenshots/sous-chef-convo2.png?rev=4&raw=true)
+
+![sous-chef](screenshots/sous-chef-convo3.png?rev=4&raw=true)
+
+## Next Steps
+
+For more information on how the sous-chef bot works [read the original blog post](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu).
+
+We will be publishing a new blog post soon that will discuss the enhancements we have made to the original application, including
+how we are using Cloudant to store chat history and enable the new "favorites" intent.
