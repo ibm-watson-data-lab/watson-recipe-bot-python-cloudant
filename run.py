@@ -23,11 +23,16 @@ if __name__ == "__main__":
             version='2016-07-11'
         )
         recipe_client = RecipeClient(os.environ.get("SPOONACULAR_KEY"))
+        recipe_store_url = os.environ.get("CLOUDANT_URL")
+        if recipe_store_url.find('@') > 0:
+            prefix = recipe_store_url[0:recipe_store_url.find('://')+3]
+            suffix = recipe_store_url[recipe_store_url.find('@')+1:]
+            recipe_store_url = '{}{}'.format(prefix, suffix)
         recipe_store = CloudantRecipeStore(
             Cloudant(
                 os.environ.get("CLOUDANT_USERNAME"),
                 os.environ.get("CLOUDANT_PASSWORD"),
-                url=os.environ.get("CLOUDANT_URL")
+                url=recipe_store_url
             ),
             os.environ.get("CLOUDANT_DB_NAME")
         )

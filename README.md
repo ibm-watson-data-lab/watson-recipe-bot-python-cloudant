@@ -176,6 +176,59 @@ CONVERSATION_PASSWORD=xxxxxxxxxxxx
 
 Next, let's launch the Watson Conversation tool and import our conversation workspace.
 
+1. Go back to the **Manage** tab.
+2. Click the **Launch tool** button.
+3. Log in to Watson Conversation with your Bluemix credentials if prompted to do so.
+4. On the **Create workspace** page click the **Import** button.
+5. Choose the workspace.json file in the application directory (watson-recipe-bot-python-cloudant).
+6. Click the **Import** button.
+7. Under Workspaces you should now see the Recipe Bot.
+8. Click the menu button (3 vertical dots) and click **View Details**
+9. Copy the Workspace ID and paste it into your .env file:
 
+```
+CONVERSATION_WORKSPACE_ID=40xxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
 
+### Cloudant
 
+We're almost there! Next, we'll provision an instance of Cloudant in our Bluemix account. After this step we will be able to run our bot locally.
+
+1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
+2. In the IBM Bluemix Catalog search for **Cloudant**.
+3. Select the **Cloudant NoSQL DB** service.
+4. Click the **Create** button on the Cloudant detail page.
+5. On your newly created Cloudant service page click the **Service Credentials** tab.
+6. Find your newly created Credentials and click **View Credentials**
+7. Copy the username, password, and the url into your .env file:
+
+```
+CLOUDANT_USERNAME=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix
+CLOUDANT_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CLOUDANT_URL=https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix.cloudant.com
+```
+
+### Run Locally
+
+We're now ready to test our bot. From the command-line run the following command:
+
+```
+python run.py
+```
+
+If all is well you should see output similar to the following:
+
+```
+Getting database...
+Creating database watson_recipe_bot...
+sous-chef is connected and running!
+```
+
+To interact with the bot open Slack, go to the Slack team where you installed the bot, start a direct conversation with
+sous-chef, and say "hi".
+
+_More details coming soon!_
+ 
+### Deploy to Bluemix
+
+**Coming soon!**
