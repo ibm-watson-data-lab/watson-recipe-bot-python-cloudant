@@ -95,12 +95,12 @@ You can also change the Slack team from the pulldown in the top right.
 
 1. You'll start by choosing a username for your bot. In the field provided enter **sous-chef**.
 
-    ![Slack](screenshots/slack1.png?raw=true)
+    ![Slack](screenshots/slack1.png?rev=2&raw=true)
 
 2. Click the **Add bot integration** button.
 3. On the following screen you will find the API Token. Copy this value to your clipboard.
 
-    ![Slack](screenshots/slack2.png?raw=true)
+    ![Slack](screenshots/slack2.png?rev=2&raw=true)
     
 4. Open the .env file in a text editor.
 5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
@@ -137,19 +137,19 @@ In this next step we'll set up your Spoonacular account. Spoonacular is a Food a
 The application uses Spoonacular to find recipes based on ingredient or cuisines requested by the user.
   
 1. In your web browser go to [https://spoonacular.com/food-api](https://spoonacular.com/food-api).
-2. Find and click the **Get Access** button.
+2. Click the **Get Access** button.
+
+    ![Spoonacular](screenshots/spoonacular1.png?rev=1&raw=true)
+
 3. Click the appropriate button to gain access (i.e. **Get Regular Access**)
+
+    ![Spoonacular](screenshots/spoonacular2.png?rev=2&raw=true)
+
 4. Choose the appropriate Pricing plan (i.e. **Basic**) and click the **Subscribe** button.
 5. Follow the instructions to sign into or sign up for a Mashape account.
-6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It may look something like this:
+6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It should look similar to this:
 
-    ```
-    curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/classify' \
-      -H 'X-Mashape-Key: Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
-      -H 'Content-Type: application/json' \
-      -H 'Accept: application/json' \
-      --data-binary '{"title":"Kroger Vitamin A & D Reduced Fat 2% Milk","upc":"","plu_code":""}'
-    ```
+    ![Spoonacular](screenshots/spoonacular3.png?rev=1&raw=true)
 
 7. Copy the value of the X-Mashape-Key and paste it into your .env file:
 
@@ -168,11 +168,23 @@ Login to your Bluemix account.
 First, we'll walk you through provisioning a Watson Conversation service in your Bluemix account:
 
 1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
+
+    ![Bluemix](screenshots/bluemix1.png?rev=3&raw=true)
+
 2. In the IBM Bluemix Catalog search for **Watson Conversation**.
 3. Select the **Conversation** service.
+
+    ![Watson Conversation](screenshots/conversation1.png?rev=1&raw=true)
+    
 4. Click the **Create** button on the Conversation detail page.
 5. On your newly created Conversation service page click the **Service Credentials** tab.
+
+    ![Watson Conversation](screenshots/conversation2.png?rev=1&raw=true)
+
 6. Find your newly created Credentials and click **View Credentials**
+
+    ![Watson Conversation](screenshots/conversation3.png?rev=1&raw=true)
+
 7. Copy the username and password into your .env file:
 
     ```
@@ -184,12 +196,24 @@ Next, let's launch the Watson Conversation tool and import our conversation work
 
 1. Go back to the **Manage** tab.
 2. Click the **Launch tool** button.
+
+    ![Watson Conversation](screenshots/conversation4.png?rev=1&raw=true)
+
 3. Log in to Watson Conversation with your Bluemix credentials if prompted to do so.
 4. On the **Create workspace** page click the **Import** button.
+
+    ![Watson Conversation](screenshots/conversation5.png?rev=1&raw=true)
+    
 5. Choose the workspace.json file in the application directory (watson-recipe-bot-python-cloudant).
 6. Click the **Import** button.
+
+    ![Watson Conversation](screenshots/conversation6.png?rev=1&raw=true)
+
 7. Under Workspaces you should now see the Recipe Bot.
 8. Click the menu button (3 vertical dots) and click **View Details**
+
+    ![Watson Conversation](screenshots/conversation7.png?rev=1&raw=true)
+    
 9. Copy the Workspace ID and paste it into your .env file:
 
     ```
@@ -203,6 +227,9 @@ We're almost there! Next, we'll provision an instance of Cloudant in our Bluemix
 1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
 2. In the IBM Bluemix Catalog search for **Cloudant**.
 3. Select the **Cloudant NoSQL DB** service.
+
+    ![Watson Conversation](screenshots/cloudant1.png?rev=1&raw=true)
+    
 4. Click the **Create** button on the Cloudant detail page.
 5. On your newly created Cloudant service page click the **Service Credentials** tab.
 6. Find your newly created Credentials and click **View Credentials**
