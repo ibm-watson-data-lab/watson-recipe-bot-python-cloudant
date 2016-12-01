@@ -161,7 +161,7 @@ If you do not already have a Bluemix account [click here](https://console.ng.blu
 
 Login to your Bluemix account.
 
-#### Watson Conversation
+### Watson Conversation
 
 First, we'll walk you through provisioning a Watson Conversation service in your Bluemix account:
 
