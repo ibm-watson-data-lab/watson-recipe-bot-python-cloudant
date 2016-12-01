@@ -2,6 +2,7 @@ from cloudant.query import Query
 
 
 class CloudantRecipeStore(object):
+
     def __init__(self, client, db_name):
         self.client = client
         self.db_name = db_name
@@ -58,12 +59,10 @@ class CloudantRecipeStore(object):
                 latest_user_doc['ingredients'] = []
             # find the ingredient that matches the name of the passed in ingredient
             # if it doesn't exist create it
-            user_ingredient = None
-            for ingredient in latest_user_doc['ingredients']:
-                if ingredient['name'] == ingredient_doc['name']:
-                    user_ingredient = ingredient
-                    break
-            if user_ingredient is None:
+            user_ingredients = filter(lambda x: x['name'] == ingredient_doc['name'], latest_user_doc['ingredients'])
+            if len(user_ingredients) > 0:
+                user_ingredient = user_ingredients[0]
+            else:
                 user_ingredient = {'name': ingredient_doc['name']}
                 latest_user_doc['ingredients'].append(user_ingredient)
             # see if the user_ingredient exists, if not create it
@@ -105,12 +104,10 @@ class CloudantRecipeStore(object):
                 latest_user_doc['cuisines'] = []
             # find the cuisine that matches the name of the passed in cuisine
             # if it doesn't exist create it
-            user_cuisine = None
-            for cuisine in latest_user_doc['cuisines']:
-                if cuisine['name'] == cuisine_doc['name']:
-                    user_cuisine = cuisine
-                    break
-            if user_cuisine is None:
+            user_cuisines = filter(lambda x: x['name'] == cuisine_doc['name'], latest_user_doc['cuisines'])
+            if len(user_cuisines) > 0:
+                user_cuisine = user_cuisines[0]
+            else:
                 user_cuisine = {'name': cuisine_doc['name']}
                 latest_user_doc['cuisines'].append(user_cuisine)
             # see if the user_cuisine exists, if not create it
@@ -172,12 +169,10 @@ class CloudantRecipeStore(object):
                 latest_user_doc['recipes'] = []
             # find the recipe that matches the name of the passed in recipe
             # if it doesn't exist create it
-            user_recipe = None
-            for recipe in latest_user_doc['recipes']:
-                if recipe['id'] == recipe_doc['name']:
-                    user_recipe = recipe
-                    break
-            if user_recipe is None:
+            user_recipes = filter(lambda x: x['id'] == recipe_doc['name'], latest_user_doc['recipes'])
+            if len(user_recipes) > 0:
+                user_recipe = user_recipes[0]
+            else:
                 user_recipe = {
                     'id': recipe_doc['name'],
                     'title': recipe_doc['title']
