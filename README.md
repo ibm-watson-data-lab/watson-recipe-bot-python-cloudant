@@ -98,7 +98,6 @@ You can also change the Slack team from the pulldown in the top right.
 3. On the following screen you will find the API Token. Copy this value to your clipboard.
 4. Open the .env file in a text editor.
 5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
-
 ```
 SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
 ```
@@ -107,12 +106,10 @@ SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
 Next, we need to get the Slack ID of the bot. The application includes a Python script for doing just that.
 
 1. From the command-line run the following command:
-
 ```
 python scripts/get_bot_id.py
 ```
 2. The script should print out the bot ID. The output should be similar to the following:
- 
 ```
 Bot ID for 'sous-chef' is U3XXXXXXX
 ```
@@ -133,7 +130,6 @@ The application uses Spoonacular to find recipes based on ingredient or cuisines
 4. Choose the appropriate Pricing plan (i.e. **Basic**) and click the **Subscribe** button.
 5. Follow the instructions to sign into or sign up for a Mashape account.
 6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It may look something like this:
-
 ```
 curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/classify' \
   -H 'X-Mashape-Key: Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
@@ -142,7 +138,6 @@ curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.c
   --data-binary '{"title":"Kroger Vitamin A & D Reduced Fat 2% Milk","upc":"","plu_code":""}'
 ```
 7. Copy the value of the X-Mashape-Key and paste it into your .env file:
-
 ```
 SPOONACULAR_KEY=Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
