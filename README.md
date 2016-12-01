@@ -149,7 +149,7 @@ The application uses Spoonacular to find recipes based on ingredient or cuisines
 5. Follow the instructions to sign into or sign up for a Mashape account.
 6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It should look similar to this:
 
-    ![Spoonacular](screenshots/spoonacular3.png?rev=1&raw=true)
+    ![Spoonacular](screenshots/spoonacular3.png?rev=2&raw=true)
 
 7. Copy the value of the X-Mashape-Key and paste it into your .env file:
 
