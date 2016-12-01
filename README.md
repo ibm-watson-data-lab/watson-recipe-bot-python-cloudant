@@ -274,8 +274,9 @@ Once you have the CLI tools run the following command (make sure you are in the 
 cf push
 ```
 
-It will take a few minutes for the application to be uploaded and created in Bluemix and the application will fail to start.
-This is because we need to add our environment variables to the application.
+It will take a few minutes for the application to be uploaded and created in Bluemix.
+The first time you deploy the application it will fail to start.
+This is because we need to add our environment variables to the application in Bluemix.
 
 1. After a few minutes has passed and your `cf push` command has completed log in to Bluemix.
 2. Find and click the **watson-recipe-bot-cloudant** application under **Cloud Foundry Applications** in your Apps Dashboard.
@@ -293,10 +294,17 @@ To verify that your bot is running open Slack and start a direct conversation wi
 
 ![sous-chef](screenshots/sous-chef1.png?rev=1&raw=true)
 
-Here are some sample conversations you can have with the bot:
+Here are some sample conversations you can have with sous-chef:
 
 ![sous-chef](screenshots/sous-chef-convo1.png?rev=4&raw=true)
 
 ![sous-chef](screenshots/sous-chef-convo2.png?rev=4&raw=true)
 
 ![sous-chef](screenshots/sous-chef-convo3.png?rev=4&raw=true)
+
+## Next Steps
+
+For more information on how the sous-chef bot works [read the original blog post](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu).
+
+We will be publishing a new blog post soon talks about the enhancements we have made to the original application, including
+how we are using Cloudant to store chat history, and how we used it to add the new "favorites" intent.
