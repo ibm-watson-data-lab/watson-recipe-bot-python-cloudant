@@ -94,8 +94,14 @@ In your web browser go to [https://my.slack.com/services/new/bot](https://my.sla
 You can also change the Slack team from the pulldown in the top right.
 
 1. You'll start by choosing a username for your bot. In the field provided enter **sous-chef**.
+
+    ![Slack](screenshots/slack1.png?raw=true)
+
 2. Click the **Add bot integration** button.
 3. On the following screen you will find the API Token. Copy this value to your clipboard.
+
+    ![Slack](screenshots/slack2.png?raw=true)
+    
 4. Open the .env file in a text editor.
 5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
 
