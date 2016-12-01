@@ -32,11 +32,11 @@ CLOUDANT_URL=https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix.cloudant.com
 CLOUDANT_DB_NAME=watson_recipe_bot
 ```
 
-We will show you how configure the necessary services and retrieve these values in the instructions below:
+We will show you how to configure the necessary services and retrieve these values in the instructions below:
 
 ### Prerequisites
 
-The following prerequisites are required to run the application. We will walk you through configuring each one below:
+The following prerequisites are required to run the application.
 
 1. A [Bluemix](https://www.ibm.com/cloud-computing/bluemix/) account.
 2. A [Watson Conversation](https://www.ibm.com/watson/developercloud/conversation.html) service provisioned in your Bluemix account.
@@ -109,7 +109,7 @@ You can also change the Slack team from the pulldown in the top right.
 
 6. Save the .env file
 
-Next, we need to get the Slack ID of the bot. The application includes a Python script for doing just that.
+Next, we need to get the Slack ID of the bot.
 
 1. From the command-line run the following command:
 
@@ -202,7 +202,7 @@ Next, let's launch the Watson Conversation tool and import our conversation work
 
     ![Watson Conversation](screenshots/conversation5.png?rev=1&raw=true)
     
-5. Choose the workspace.json file in the application directory (watson-recipe-bot-python-cloudant).
+5. Choose the workspace.json file in the application directory (*watson-recipe-bot-python-cloudant/workspace.json*).
 6. Click the **Import** button.
 
     ![Watson Conversation](screenshots/conversation6.png?rev=1&raw=true)
@@ -257,6 +257,8 @@ sous-chef is connected and running!
 
 To interact with the bot open Slack, go to the Slack team where you installed the bot, start a direct conversation with
 sous-chef, and say "hi".
+
+![sous-chef](screenshots/local1.png?rev=2&raw=true)
 
 ### Deploy to Bluemix
 
