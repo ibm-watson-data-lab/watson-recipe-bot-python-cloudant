@@ -21,18 +21,20 @@ After cloning this repo follow the steps below.
 
 The following environment variables are required to run the application:
 
-    SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
-    SLACK_BOT_ID=UXXXXXXXX
-    SPOONACULAR_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    CONVERSATION_USERNAME=xxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxxx
-    CONVERSATION_PASSWORD=xxxxxxxxxxxx
-    CONVERSATION_WORKSPACE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-    CLOUDANT_USERNAME=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix
-    CLOUDANT_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    CLOUDANT_URL=https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix.cloudant.com
-    CLOUDANT_DB_NAME=watson_recipe_bot
+```
+SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
+SLACK_BOT_ID=UXXXXXXXX
+SPOONACULAR_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CONVERSATION_USERNAME=xxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxxx
+CONVERSATION_PASSWORD=xxxxxxxxxxxx
+CONVERSATION_WORKSPACE_ID=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+CLOUDANT_USERNAME=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix
+CLOUDANT_PASSWORD=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+CLOUDANT_URL=https://xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx-bluemix.cloudant.com
+CLOUDANT_DB_NAME=watson_recipe_bot
+```
 
-We will show you how configure the necessary services and retrieve these follows in the instructions below:
+We will show you how configure the necessary services and retrieve these values in the instructions below:
 
 ### Prerequisites
 
@@ -50,10 +52,104 @@ To push your application to Bluemix from your local development environment you 
 
 ### Local Development Environment
 
-We'll start by getting your local development environment set up.
+We'll start by getting your local development environment set up. If you haven't already install Python, pip, and virtualenv.
 
-From the command-line cd into the watson-bot-recipe-python-cloudant directory:
+You can install Python by following the instructions [here](https://www.python.org/downloads/).
 
+You can install pip by following the instructions [here](https://pip.pypa.io/en/stable/).
+
+You can install virtualenv by following the instructions [here](https://virtualenv.pypa.io/en/stable/).
+
+From the command-line cd into the watson-recipe-bot-python-cloudant directory:
+
+```
+git clone https://github.com/ibm-cds-labs/watson-recipe-bot-python-cloudant
+cd watson-recipe-bot-python-cloudant
+```
+ 
+Create and activate a new virtual environment:
+
+```
+virtualenv venv
+source ./venv/bin/activate
+```
+
+Install the application requirements:
+
+```
+pip install -r requirements.txt
+```
+
+Copy the .env.template file included in the project to .env. This file will contain the environment variable definitions:
+
+```
+cp .env.template .env
+```
+
+### Slack
+
+In this next step we'll create a new Slack bot in your Slack team.
+ 
+In your web browser go to [https://my.slack.com/services/new/bot](https://my.slack.com/services/new/bot). Make sure you sign into the appropriate Slack team.
+You can also change the Slack team from the pulldown in the top right.
+
+1. You'll start by choosing a username for your bot. In the field provided enter **sous-chef**.
+2. Click the **Add bot integration** button.
+3. On the following screen you will find the API Token. Copy this value to your clipboard.
+4. Open the .env file in a text editor.
+5. Paste the copied token from your clipboard as the SLACK_BOT_TOKEN value:
+
+```
+SLACK_BOT_TOKEN=xxxx-xxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+6. Save the .env file
+
+Next, we need to get the Slack ID of the bot. The application includes a Python script for doing just that.
+
+1. From the command-line run the following command:
+
+```
+python scripts/get_bot_id.py
+```
+    
+2. The script should print out the bot ID. The output should be similar to the following:
+ 
+```
+Bot ID for 'sous-chef' is U3XXXXXXX
+```
+
+3. Copy and paste the bot ID into your .env file:
+
+```
+SLACK_BOT_ID=U3XXXXXXX
+```
+
+### Spoonacular
+
+In this next step we'll set up your Spoonacular account. Spoonacular is a Food and Recipe API.
+The application uses Spoonacular to find recipes based on ingredient or cuisines requested by the user.
+  
+1. In your web browser go to [https://spoonacular.com/food-api](https://spoonacular.com/food-api).
+2. Find and click the **Get Access** button.
+3. Click the appropriate button to gain access (i.e. **Get Regular Access**)
+4. Choose the appropriate Pricing plan (i.e. **Basic**) and click the **Subscribe** button.
+5. Follow the instructions to sign into or sign up for a Mashape account.
+6. After you have subscribed to Spoonacular in the Documentation tab find a curl example on the right. It may look something like this:
+
+```
+curl -X POST --include 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/products/classify' \
+  -H 'X-Mashape-Key: Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  --data-binary '{"title":"Kroger Vitamin A & D Reduced Fat 2% Milk","upc":"","plu_code":""}'
+```
+
+7. Copy the value of the X-Mashape-Key and paste it into your .env file:
+
+```
+SPOONACULAR_KEY=Znxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
 
 ### Bluemix
 
@@ -63,6 +159,23 @@ Login to your Bluemix account.
 
 #### Watson Conversation
 
-From your Bluemix Dashboard 
+First, we'll walk you through provisioning a Watson Conversation service in your Bluemix account:
+
+1. From your Bluemix Applications or Services Dashboard click the **Create Service** button.
+2. In the IBM Bluemix Catalog search for **Watson Conversation**.
+3. Select the **Conversation** service.
+4. Click the **Create** button on the Conversation detail page.
+5. On your newly created Conversation service page click the **Service Credentials** tab.
+6. Find your newly created Credentials and click **View Credentials**
+7. Copy the username and password into your .env file:
+
+```
+CONVERSATION_USERNAME=xxxxxxx-xxxx-xxxx-xxxxx-xxxxxxxxxxxxx
+CONVERSATION_PASSWORD=xxxxxxxxxxxx
+```
+
+Next, let's launch the Watson Conversation tool and import our conversation workspace.
+
+
 
 
