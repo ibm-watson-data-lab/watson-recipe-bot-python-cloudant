@@ -306,5 +306,5 @@ Here are some sample conversations you can have with sous-chef:
 
 For more information on how the sous-chef bot works [read the original blog post](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu).
 
-We will be publishing a new blog post soon talks about the enhancements we have made to the original application, including
-how we are using Cloudant to store chat history, and how we used it to add the new "favorites" intent.
+We will be publishing a new blog post soon that will discuss the enhancements we have made to the original application, including
+how we are using Cloudant to store chat history and enable the new "favorites" intent.
