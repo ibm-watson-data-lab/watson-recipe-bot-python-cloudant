@@ -1,4 +1,6 @@
+import deployment_tracker
 import os
+
 from cloudant.client import Cloudant
 from dotenv import load_dotenv
 from slackclient import SlackClient
@@ -22,6 +24,8 @@ os.chdir('static')
 
 httpd = Server(("", PORT), Handler)
 try:
+    # track deployment
+    deployment_tracker.track()
     # load environment variables
     load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
     slack_bot_id = os.environ.get("SLACK_BOT_ID")
