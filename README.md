@@ -311,7 +311,7 @@ how we are using Cloudant to store chat history and enable the new "favorites" i
 
 ## Privacy Notice
 
-The Location Tracker sample web application includes code to track deployments to [IBM Bluemix](https://www.bluemix.net/) and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
+This application includes code to track deployments to [IBM Bluemix](https://www.bluemix.net/) and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
 
 * Application Name (`application_name`)
 * Space ID (`space_id`)
@@ -324,7 +324,7 @@ This data is collected from the `VCAP_APPLICATION` environment variable in IBM B
 
 Deployment tracking can be disabled by removing or commenting out the following line in `server.py`:
 
-`cf_deployment_tracker.track()`
+`deployment_tracker.track()`
 
 ## License
 
