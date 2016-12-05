@@ -9,6 +9,10 @@ This project is essentially a fork of the Watson Recipe Bot with some additional
 2. Cloudant integration - this application adds Cloudant integration for caching 3rd party API calls and storing each user's chat history (the ingredients, cuisines, and recipes they have selected).
 3. Additional Watson Conversation intent - this application adds a "favorites" intent which allows a user to request their favorite recipes based on the history stored in Cloudant.
 
+####Prefer Node.js?
+
+There is a Node.js version of this project [here](https://github.com/ibm-cds-labs/watson-recipe-bot-nodejs-cloudant).
+
 ## Getting Started
 
 Before you get started [read the original blog post](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu)
