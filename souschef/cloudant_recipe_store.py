@@ -42,6 +42,29 @@ class CloudantRecipeStore(object):
                     'language': 'javascript'
                 }
                 db.create_document(design_doc)
+            # see if the by_day_of_week design doc exists, if not then create it
+            query = Query(db, selector={ '_id': '_design/by_day_of_week' })
+            result = query()['docs']
+            if result is None or len(result) <= 0:
+                design_doc = {
+                    '_id': '_design/by_day_of_week',
+                    'views': {
+                        'ingredients': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userIngredientRequest\') {\n    var weekdays = [\'Sunday\',\'Monday\',\'Tuesday\',\'Wednesday\',\'Thursday\',\'Friday\',\'Saturday\'];\n    emit(weekdays[new Date(doc.date).getDay()], 1);\n  }\n}',
+                            'reduce': '_sum'
+                        },
+                        'cuisines': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userCuisineRequest\') {\n    var weekdays = [\'Sunday\',\'Monday\',\'Tuesday\',\'Wednesday\',\'Thursday\',\'Friday\',\'Saturday\'];\n    emit(weekdays[new Date(doc.date).getDay()], 1);\n  }\n}',
+                            'reduce': '_sum'
+                        },
+                        'recipes': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userRecipeRequest\') {\n    var weekdays = [\'Sunday\',\'Monday\',\'Tuesday\',\'Wednesday\',\'Thursday\',\'Friday\',\'Saturday\'];\n    emit(weekdays[new Date(doc.date).getDay()], 1);\n  }\n}',
+                            'reduce': '_sum'
+                        }
+                    },
+                    'language': 'javascript'
+                }
+                db.create_document(design_doc)
         finally:
             self.client.disconnect()
 
@@ -105,7 +128,7 @@ class CloudantRecipeStore(object):
                 'user_name': user_doc['name'],
                 'ingredient_id': ingredient_doc['_id'],
                 'ingredient_name': ingredient_doc['name'],
-                'date': time.time()
+                'date': int(time.time()*1000)
             }
             db = self.client[self.db_name]
             db.create_document(user_ingredient_doc)
@@ -161,7 +184,7 @@ class CloudantRecipeStore(object):
                 'user_name': user_doc['name'],
                 'cuisine_id': cuisine_doc['_id'],
                 'cuisine_name': cuisine_doc['name'],
-                'date': time.time()
+                'date': int(time.time()*1000)
             }
             db = self.client[self.db_name]
             db.create_document(user_cuisine_doc)
@@ -240,7 +263,7 @@ class CloudantRecipeStore(object):
                 'user_name': user_doc['name'],
                 'recipe_id': recipe_doc['_id'],
                 'recipe_title': recipe_doc['title'],
-                'date': time.time()
+                'date': int(time.time()*1000)
             }
             db = self.client[self.db_name]
             db.create_document(user_recipe_doc)
