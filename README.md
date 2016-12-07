@@ -1,7 +1,7 @@
 # Watson Recipe Bot + Cloudant
 
 This project is based on the [Watson Recipe Bot example](https://medium.com/ibm-watson-developer-cloud/how-to-build-a-recipe-slack-bot-using-watson-conversation-and-spoonacular-api-487eacaf01d4#.i0q8fnhuu).
-The Watson Recipe Bot is Slack bot that recommends recipes based on ingredients or cuisines.
+The Watson Recipe Bot is a Slack bot that recommends recipes based on ingredients or cuisines.
 This project is essentially a fork of the Watson Recipe Bot with some additional features, including:
 
 1. Multi-user support - the original application supported only a single user interacting with the bot at a time. This application support multiple users interacting with the bot at the same time.

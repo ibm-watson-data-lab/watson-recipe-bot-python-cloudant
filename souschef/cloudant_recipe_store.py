@@ -1,3 +1,5 @@
+import time
+
 from cloudant.query import Query
 
 
@@ -16,6 +18,30 @@ class CloudantRecipeStore(object):
                 self.client.create_database(self.db_name)
             else:
                 print 'Database {} exists.'.format(self.db_name)
+            # see if the "popular" design doc exists, if not then create it
+            db = self.client[self.db_name]
+            query = Query(db, selector={ '_id': '_design/popular' })
+            result = query()['docs']
+            if result is None or len(result) <= 0:
+                design_doc = {
+                    '_id': '_design/popular',
+                    'views': {
+                        'ingredients': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userIngredientRequest\') {\n    emit(doc.ingredient_name, 1);\n  }\n}',
+                            'reduce': '_sum'
+                        },
+                        'cuisines': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userCuisineRequest\') {\n    emit(doc.cuisine_name, 1);\n  }\n}',
+                            'reduce': '_sum'
+                        },
+                        'recipes': {
+                            'map': 'function (doc) {\n  if (doc.type && doc.type==\'userRecipeRequest\') {\n    emit(doc.recipe_title, 1);\n  }\n}',
+                            'reduce': '_sum'
+                        }
+                    },
+                    'language': 'javascript'
+                }
+                db.create_document(design_doc)
         finally:
             self.client.disconnect()
 
@@ -72,6 +98,17 @@ class CloudantRecipeStore(object):
             user_ingredient['count'] += 1
             # save the user doc
             latest_user_doc.save()
+            # add a new doc with the user/ingredient details
+            user_ingredient_doc = {
+                'type': 'userIngredientRequest',
+                'user_id': user_doc['_id'],
+                'user_name': user_doc['name'],
+                'ingredient_id': ingredient_doc['_id'],
+                'ingredient_name': ingredient_doc['name'],
+                'date': time.time()
+            }
+            db = self.client[self.db_name]
+            db.create_document(user_ingredient_doc)
         finally:
             self.client.disconnect()
 
@@ -117,6 +154,17 @@ class CloudantRecipeStore(object):
             user_cuisine['count'] += 1
             # save the user doc
             latest_user_doc.save()
+            # add a new doc with the user/cuisine details
+            user_cuisine_doc = {
+                'type': 'userCuisineRequest',
+                'user_id': user_doc['_id'],
+                'user_name': user_doc['name'],
+                'cuisine_id': cuisine_doc['_id'],
+                'cuisine_name': cuisine_doc['name'],
+                'date': time.time()
+            }
+            db = self.client[self.db_name]
+            db.create_document(user_cuisine_doc)
         finally:
             self.client.disconnect()
 
@@ -185,6 +233,17 @@ class CloudantRecipeStore(object):
             user_recipe['count'] += 1
             # save the user doc
             latest_user_doc.save()
+            # add a new doc with the user/recipe details
+            user_recipe_doc = {
+                'type': 'userRecipeRequest',
+                'user_id': user_doc['_id'],
+                'user_name': user_doc['name'],
+                'recipe_id': recipe_doc['_id'],
+                'recipe_title': recipe_doc['title'],
+                'date': time.time()
+            }
+            db = self.client[self.db_name]
+            db.create_document(user_recipe_doc)
         finally:
             self.client.disconnect()
 
