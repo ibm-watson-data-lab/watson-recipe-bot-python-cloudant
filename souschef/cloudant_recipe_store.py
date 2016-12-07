@@ -18,13 +18,13 @@ class CloudantRecipeStore(object):
                 self.client.create_database(self.db_name)
             else:
                 print 'Database {} exists.'.format(self.db_name)
-            # see if the "popular" design doc exists, if not then create it
+            # see if the by_popularity design doc exists, if not then create it
             db = self.client[self.db_name]
-            query = Query(db, selector={ '_id': '_design/popular' })
+            query = Query(db, selector={ '_id': '_design/by_popularity' })
             result = query()['docs']
             if result is None or len(result) <= 0:
                 design_doc = {
-                    '_id': '_design/popular',
+                    '_id': '_design/by_popularity',
                     'views': {
                         'ingredients': {
                             'map': 'function (doc) {\n  if (doc.type && doc.type==\'userIngredientRequest\') {\n    emit(doc.ingredient_name, 1);\n  }\n}',
