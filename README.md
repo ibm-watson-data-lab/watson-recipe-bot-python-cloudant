@@ -4,7 +4,7 @@ This project is based on the [Watson Recipe Bot example](https://medium.com/ibm-
 The Watson Recipe Bot is a Slack bot that recommends recipes based on ingredients or cuisines.
 This project is essentially a fork of the Watson Recipe Bot with some additional features, including:
 
-1. Multi-user support - the original application supported only a single user interacting with the bot at a time. This application support multiple users interacting with the bot at the same time.
+1. Multi-user support - the original application supported only a single user interacting with the bot at a time. This application supports multiple users interacting with the bot at the same time.
 2. Deploy to Bluemix - the original application was designed to be run locally. This application can be run locally, or deployed as a web application to Bluemix.
 2. Cloudant integration - this application adds Cloudant integration for caching 3rd party API calls and storing each user's chat history (the ingredients, cuisines, and recipes they have selected).
 3. Additional Watson Conversation intent - this application adds a "favorites" intent which allows a user to request their favorite recipes based on the history stored in Cloudant.
