@@ -6,10 +6,20 @@ from cloudant.query import Query
 class CloudantRecipeStore(object):
 
     def __init__(self, client, db_name):
+        """
+        Creates a new instance of CloudantRecipeStore.
+        Parameters
+        ----------
+        client - The instance of cloudant client to connect to
+        db_name - The name of the database to use
+        """
         self.client = client
         self.db_name = db_name
 
     def init(self):
+        """
+        Creates and initializes the database.
+        """
         try:
             self.client.connect()
             print 'Getting database...'
@@ -71,6 +81,12 @@ class CloudantRecipeStore(object):
     # User
 
     def add_user(self, user_id):
+        """
+        Adds a new user to Cloudant if a user with the specified ID does not already exist.
+        Parameters
+        ----------
+        user_id - The ID of the user (typically the ID returned from Slack)
+        """
         user_doc = {
             'type': 'user',
             'name': user_id
@@ -81,24 +97,52 @@ class CloudantRecipeStore(object):
 
     @staticmethod
     def get_unique_ingredients_name(ingredient_str):
+        """
+        Gets the unique name for the ingredient to be stored in Cloudant.
+        Parameters
+        ----------
+        ingredient_str - The ingredient or comma-separated list of ingredients specified by the user
+        """
         ingredients = [x.strip() for x in ingredient_str.lower().strip().split(',')]
         ingredients.sort()
         return ','.join([x for x in ingredients])
 
     def find_ingredient(self, ingredient_str):
+        """
+        Finds the ingredient based on the specified ingredientsStr in Cloudant.
+        Parameters
+        ----------
+        ingredient_str - The ingredient or comma-separated list of ingredients specified by the user
+        """
         return self.find_doc('ingredient', 'name', self.get_unique_ingredients_name(ingredient_str))
 
     def add_ingredient(self, ingredient_str, matching_recipes, user_doc):
+        """
+        Adds a new ingredient to Cloudant if an ingredient based on the specified ingredientsStr does not already exist.
+        Parameters
+        ----------
+        ingredient_str - The ingredient or comma-separated list of ingredients specified by the user
+        matching_recipes - The recipes that match the specified ingredientsStr
+        user_doc - The existing Cloudant doc for the user
+        """
         ingredient_doc = {
             'type': 'ingredient',
             'name': self.get_unique_ingredients_name(ingredient_str),
             'recipes': matching_recipes
         }
         ingredient_doc = self.add_doc_if_not_exists(ingredient_doc, 'name')
-        self.increment_ingredient_for_user(ingredient_doc, user_doc)
+        self.record_ingredient_request_for_user(ingredient_doc, user_doc)
         return ingredient_doc
 
-    def increment_ingredient_for_user(self, ingredient_doc, user_doc):
+    def record_ingredient_request_for_user(self, ingredient_doc, user_doc):
+        """
+        Records the request by the user for the specified ingredient.
+        Stores the ingredient and the number of times it has been accessed in the user doc.
+        Parameters
+        ----------
+        ingredient_doc - The existing Cloudant doc for the ingredient
+        user_doc - The existing Cloudant doc for the user
+        """
         try:
             self.client.connect()
             # get latest user
@@ -139,22 +183,50 @@ class CloudantRecipeStore(object):
 
     @staticmethod
     def get_unique_cuisine_name(cuisine):
+        """
+        Gets the unique name for the cuisine to be stored in Cloudant.
+        Parameters
+        ----------
+        cuisine - The cuisine specified by the user
+        """
         return cuisine.strip().lower()
 
-    def find_cuisine(self, cuisine_str):
-        return self.find_doc('cuisine', 'name', self.get_unique_cuisine_name(cuisine_str))
+    def find_cuisine(self, cuisine):
+        """
+        Finds the cuisine with the specified name in Cloudant.
+        Parameters
+        ----------
+        cuisine - The cuisine specified by the user
+        """
+        return self.find_doc('cuisine', 'name', self.get_unique_cuisine_name(cuisine))
 
     def add_cuisine(self, cuisine_str, matching_recipes, user_doc):
+        """
+        Adds a new cuisine to Cloudant if a cuisine with the specified name does not already exist.
+        Parameters
+        ----------
+        cuisine - The cuisine specified by the user
+        matching_recipes - The recipes that match the specified cuisine
+        user_doc - The existing Cloudant doc for the user
+        """
         cuisine_doc = {
             'type': 'cuisine',
             'name': self.get_unique_cuisine_name(cuisine_str),
             'recipes': matching_recipes
         }
         cuisine_doc = self.add_doc_if_not_exists(cuisine_doc, 'name')
-        self.increment_cuisine_for_user(cuisine_doc, user_doc)
+        self.record_cuisine_request_for_user(cuisine_doc, user_doc)
         return cuisine_doc
 
-    def increment_cuisine_for_user(self, cuisine_doc, user_doc):
+    def record_cuisine_request_for_user(self, cuisine_doc, user_doc):
+        """
+        Records the request by the user for the specified cuisine.
+        Stores the cuisine and the number of times it has been accessed in the user doc.
+        Parameters
+        ----------
+        cuisine_doc - The existing Cloudant doc for the cuisine
+        user_doc - The existing Cloudant doc for the user
+        """
         try:
             self.client.connect()
             # get latest user
@@ -195,12 +267,31 @@ class CloudantRecipeStore(object):
 
     @staticmethod
     def get_unique_recipe_name(recipe_id):
+        """
+        Gets the unique name for the recipe to be stored in Cloudant.
+        Parameters
+        ----------
+        recipe_id - The ID of the recipe (typically the ID of the recipe returned from Spoonacular)
+        """
         return str(recipe_id).strip().lower()
 
     def find_recipe(self, recipe_id):
+        """
+        Finds the recipe with the specified ID in Cloudant.
+        Parameters
+        ----------
+        recipe_id - The ID of the recipe (typically the ID of the recipe returned from Spoonacular)
+        """
         return self.find_doc('recipe', 'name', self.get_unique_recipe_name(recipe_id))
 
     def find_favorite_recipes_for_user(self, user_doc, count):
+        """
+        Finds the user's favorite recipes in Cloudant.
+        Parameters
+        ----------
+        user_doc - The existing Cloudant doc for the user
+        count - The max number of recipes to return
+        """
         try:
             self.client.connect()
             db = self.client[self.db_name]
@@ -220,6 +311,16 @@ class CloudantRecipeStore(object):
             self.client.disconnect()
 
     def add_recipe(self, recipe_id, recipe_title, recipe_detail, ingredient_cuisine_doc, user_doc):
+        """
+        Adds a new recipe to Cloudant if a recipe with the specified name does not already exist.
+        Parameters
+        ----------
+        recipe_id - The ID of the recipe (typically the ID of the recipe returned from Spoonacular)
+        recipe_title - The title of the recipe
+        recipe_detail - The detailed instructions for making the recipe
+        ingredient_cuisine_doc - The existing Cloudant doc for either the ingredient or cuisine selected before the recipe
+        user_doc - The existing Cloudant doc for the user
+        """
         recipe = {
             'type': 'recipe',
             'name': self.get_unique_recipe_name(recipe_id),
@@ -227,10 +328,19 @@ class CloudantRecipeStore(object):
             'instructions': recipe_detail
         }
         recipe = self.add_doc_if_not_exists(recipe, 'name')
-        self.increment_recipe_for_user(recipe, ingredient_cuisine_doc, user_doc)
+        self.record_recipe_request_for_user(recipe, ingredient_cuisine_doc, user_doc)
         return recipe
 
-    def increment_recipe_for_user(self, recipe_doc, ingredient_cuisine_doc, user_doc):
+    def record_recipe_request_for_user(self, recipe_doc, ingredient_cuisine_doc, user_doc):
+        """
+        Records the request by the user for the specified recipe.
+        Stores the recipe and the number of times it has been accessed in the user doc.
+        Parameters
+        ----------
+        recipe_doc - The existing Cloudant doc for the recipe
+        ingredient_cuisine_doc - The existing Cloudant doc for either the ingredient or cuisine selected before the recipe
+        user_doc - The existing Cloudant doc for the user
+        """
         try:
             self.client.connect()
             # get latest user
@@ -273,6 +383,14 @@ class CloudantRecipeStore(object):
     # Cloudant Helper Methods
 
     def find_doc(self, doc_type, property_name, property_value):
+        """
+        Finds a doc based on the specified doc_type, property_name, and property_value.
+        Parameters
+        ----------
+        doc_type - The type value of the document stored in Cloudant
+        property_name - The property name to search for
+        property_value - The value that should match for the specified property name
+        """
         try:
             self.client.connect()
             db = self.client[self.db_name]
@@ -289,6 +407,13 @@ class CloudantRecipeStore(object):
             self.client.disconnect()
 
     def add_doc_if_not_exists(self, doc, unique_property_name):
+        """
+        Adds a new doc to Cloudant if a doc with the same value for unique_property_name does not exist.
+        Parameters
+        ----------
+        doc - The document to add
+        unique_property_name - The name of the property used to search for an existing document (the value will be extracted from the doc provided)
+        """
         doc_type = doc['type']
         property_value = doc[unique_property_name]
         existing_doc = self.find_doc(doc_type, unique_property_name, property_value)

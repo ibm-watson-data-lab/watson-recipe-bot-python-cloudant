@@ -99,7 +99,7 @@ class SousChef(threading.Thread):
             print "Ingredient exists for {}. Returning recipes from datastore.".format(ingredients_str)
             matching_recipes = ingredient['recipes']
             # increment the count on the user-ingredient
-            self.recipe_store.increment_ingredient_for_user(ingredient, state.user)
+            self.recipe_store.record_ingredient_request_for_user(ingredient, state.user)
         else:
             # we don't have the ingredients in our datastore yet, so get list of recipes from Spoonacular
             print "Ingredient does not exist for {}. Querying Spoonacular for recipes.".format(ingredients_str)
@@ -125,7 +125,7 @@ class SousChef(threading.Thread):
             print "Cuisine exists for {}. Returning recipes from datastore.".format(cuisine_str)
             matching_recipes = cuisine['recipes']
             # increment the count on the user-cuisine
-            self.recipe_store.increment_cuisine_for_user(cuisine, state.user)
+            self.recipe_store.record_cuisine_request_for_user(cuisine, state.user)
         else:
             # we don't have the cuisine in our datastore yet, so get list of recipes from Spoonacular
             print "Cuisine does not exist for {}. Querying Spoonacular for recipes.".format(cuisine_str)
@@ -153,7 +153,7 @@ class SousChef(threading.Thread):
                 print "Recipe exists for {}. Returning recipe steps from datastore.".format(recipe_id)
                 recipe_detail = recipe['instructions']
                 # increment the count on the ingredient/cuisine-recipe and the user-recipe
-                self.recipe_store.increment_recipe_for_user(recipe, state.ingredient_cuisine, state.user)
+                self.recipe_store.record_recipe_request_for_user(recipe, state.ingredient_cuisine, state.user)
             else:
                 print "Recipe does not exist for {}. Querying Spoonacular for details.".format(recipe_id)
                 recipe_info = self.recipe_client.get_info_by_id(recipe_id)
