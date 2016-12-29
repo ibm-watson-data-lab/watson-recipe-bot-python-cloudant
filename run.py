@@ -20,7 +20,7 @@ if __name__ == "__main__":
         conversation_client = ConversationV1(
             username=os.environ.get("CONVERSATION_USERNAME"),
             password=os.environ.get("CONVERSATION_PASSWORD"),
-            version='2016-07-01'
+            version='2016-07-11'
         )
         recipe_client = RecipeClient(os.environ.get("SPOONACULAR_KEY"))
         recipe_store_url = os.environ.get("CLOUDANT_URL")
