@@ -1,4 +1,5 @@
 import pprint
+import sys
 import time
 import threading
 from user_state import UserState
@@ -62,6 +63,7 @@ class SousChef(threading.Thread):
             else:
                 response = self.handle_start_message(state, watson_response)
         except Exception:
+            print sys.exc_info()
             # clear state and set response
             self.clear_user_state(state)
             response = "Sorry, something went wrong! Say anything to me to start over..."
@@ -213,7 +215,7 @@ class SousChef(threading.Thread):
                 while self.running:
                     slack_output = self.slack_client.rtm_read()
                     message, message_sender, channel = self.parse_slack_output(slack_output)
-                    if message and channel:
+                    if message and channel and message_sender != self.slack_bot_id:
                         self.handle_message(message, message_sender, channel)
                     time.sleep(self.delay)
             else:
