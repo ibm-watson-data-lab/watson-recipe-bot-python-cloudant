@@ -2,7 +2,7 @@ import pprint
 import sys
 import time
 import threading
-from user_state import UserState
+from .user_state import UserState
 
 
 class SousChef(threading.Thread):
@@ -63,7 +63,7 @@ class SousChef(threading.Thread):
             else:
                 response = self.handle_start_message(state, watson_response)
         except Exception:
-            print sys.exc_info()
+            print(sys.exc_info())
             # clear state and set response
             self.clear_user_state(state)
             response = "Sorry, something went wrong! Say anything to me to start over..."
@@ -94,13 +94,13 @@ class SousChef(threading.Thread):
         ingredients_str = message
         ingredient = self.recipe_store.find_ingredient(ingredients_str)
         if ingredient is not None:
-            print "Ingredient exists for {}. Returning recipes from datastore.".format(ingredients_str)
+            print("Ingredient exists for {}. Returning recipes from datastore.".format(ingredients_str))
             matching_recipes = ingredient['recipes']
             # increment the count on the user-ingredient
             self.recipe_store.record_ingredient_request_for_user(ingredient, state.user)
         else:
             # we don't have the ingredients in our datastore yet, so get list of recipes from Spoonacular
-            print "Ingredient does not exist for {}. Querying Spoonacular for recipes.".format(ingredients_str)
+            print("Ingredient does not exist for {}. Querying Spoonacular for recipes.".format(ingredients_str))
             matching_recipes = self.recipe_client.find_by_ingredients(ingredients_str)
             # add ingredient to datastore
             ingredient = self.recipe_store.add_ingredient(ingredients_str, matching_recipes, state.user)
@@ -117,13 +117,13 @@ class SousChef(threading.Thread):
         cuisine_str = message
         cuisine = self.recipe_store.find_cuisine(cuisine_str)
         if cuisine is not None:
-            print "Cuisine exists for {}. Returning recipes from datastore.".format(cuisine_str)
+            print("Cuisine exists for {}. Returning recipes from datastore.".format(cuisine_str))
             matching_recipes = cuisine['recipes']
             # increment the count on the user-cuisine
             self.recipe_store.record_cuisine_request_for_user(cuisine, state.user)
         else:
             # we don't have the cuisine in our datastore yet, so get list of recipes from Spoonacular
-            print "Cuisine does not exist for {}. Querying Spoonacular for recipes.".format(cuisine_str)
+            print("Cuisine does not exist for {}. Querying Spoonacular for recipes.".format(cuisine_str))
             matching_recipes = self.recipe_client.find_by_cuisine(cuisine_str)
             # add cuisine to datastore
             cuisine = self.recipe_store.add_cuisine(cuisine_str, matching_recipes, state.user)
@@ -145,13 +145,13 @@ class SousChef(threading.Thread):
             recipe_id = recipes[selection-1]['id']
             recipe = self.recipe_store.find_recipe(recipe_id)
             if recipe is not None:
-                print "Recipe exists for {}. Returning recipe steps from datastore.".format(recipe_id)
+                print("Recipe exists for {}. Returning recipe steps from datastore.".format(recipe_id))
                 recipe_detail = recipe['instructions']
                 recipe_title = recipe['title']
                 # increment the count on the ingredient/cuisine-recipe and the user-recipe
                 self.recipe_store.record_recipe_request_for_user(recipe, state.ingredient_cuisine, state.user)
             else:
-                print "Recipe does not exist for {}. Querying Spoonacular for details.".format(recipe_id)
+                print("Recipe does not exist for {}. Querying Spoonacular for details.".format(recipe_id))
                 recipe_info = self.recipe_client.get_info_by_id(recipe_id)
                 recipe_steps = self.recipe_client.get_steps_by_id(recipe_id)
                 recipe_detail = self.get_recipe_instructions_response(recipe_info, recipe_steps)

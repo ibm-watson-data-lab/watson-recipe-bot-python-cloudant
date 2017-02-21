@@ -22,12 +22,12 @@ class CloudantRecipeStore(object):
         """
         try:
             self.client.connect()
-            print 'Getting database...'
+            print('Getting database...')
             if self.db_name not in self.client.all_dbs():
-                print 'Creating database {}...'.format(self.db_name)
+                print('Creating database {}...'.format(self.db_name))
                 self.client.create_database(self.db_name)
             else:
-                print 'Database {} exists.'.format(self.db_name)
+                print('Database {} exists.'.format(self.db_name))
             # see if the by_popularity design doc exists, if not then create it
             db = self.client[self.db_name]
             query = Query(db, selector={ '_id': '_design/by_popularity' })
@@ -418,10 +418,10 @@ class CloudantRecipeStore(object):
         property_value = doc[unique_property_name]
         existing_doc = self.find_doc(doc_type, unique_property_name, property_value)
         if existing_doc is not None:
-            print 'Returning {} doc where {}={}'.format(doc_type, unique_property_name, property_value)
+            print('Returning {} doc where {}={}'.format(doc_type, unique_property_name, property_value))
             return existing_doc
         else:
-            print 'Creating {} doc where {}={}'.format(doc_type, unique_property_name, property_value)
+            print('Creating {} doc where {}={}'.format(doc_type, unique_property_name, property_value))
             try:
                 self.client.connect()
                 db = self.client[self.db_name]
