@@ -152,7 +152,7 @@ class CloudantRecipeStore(object):
                 latest_user_doc['ingredients'] = []
             # find the ingredient that matches the name of the passed in ingredient
             # if it doesn't exist create it
-            user_ingredients = filter(lambda x: x['name'] == ingredient_doc['name'], latest_user_doc['ingredients'])
+            user_ingredients = list(filter(lambda x: x['name'] == ingredient_doc['name'], latest_user_doc['ingredients']))
             if len(user_ingredients) > 0:
                 user_ingredient = user_ingredients[0]
             else:
@@ -236,7 +236,7 @@ class CloudantRecipeStore(object):
                 latest_user_doc['cuisines'] = []
             # find the cuisine that matches the name of the passed in cuisine
             # if it doesn't exist create it
-            user_cuisines = filter(lambda x: x['name'] == cuisine_doc['name'], latest_user_doc['cuisines'])
+            user_cuisines = list(filter(lambda x: x['name'] == cuisine_doc['name'], latest_user_doc['cuisines']))
             if len(user_cuisines) > 0:
                 user_cuisine = user_cuisines[0]
             else:
@@ -350,7 +350,7 @@ class CloudantRecipeStore(object):
                 latest_user_doc['recipes'] = []
             # find the recipe that matches the name of the passed in recipe
             # if it doesn't exist create it
-            user_recipes = filter(lambda x: x['id'] == recipe_doc['name'], latest_user_doc['recipes'])
+            user_recipes = list(filter(lambda x: x['id'] == recipe_doc['name'], latest_user_doc['recipes']))
             if len(user_recipes) > 0:
                 user_recipe = user_recipes[0]
             else:
