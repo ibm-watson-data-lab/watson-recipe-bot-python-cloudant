@@ -1,4 +1,5 @@
 import os
+import signal
 import sys
 
 from cloudant.client import Cloudant
@@ -9,6 +10,12 @@ from watson_developer_cloud import ConversationV1
 from souschef.recipe import RecipeClient
 from souschef.cloudant_recipe_store import CloudantRecipeStore
 from souschef.souschef import SousChef
+
+
+def signal_handler(signal, frame):
+    souschef.stop()
+    souschef.join()
+    sys.exit(0)
 
 if __name__ == "__main__":
     try:
@@ -44,8 +51,11 @@ if __name__ == "__main__":
                             recipe_client,
                             recipe_store)
         souschef.start()
-        sys.stdin.readline()
+        signal.signal(signal.SIGINT, signal_handler)
+        signal.pause()
     except (KeyboardInterrupt, SystemExit):
         pass
-    souschef.stop()
-    souschef.join()
+
+
+
+
